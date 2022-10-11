@@ -53,43 +53,59 @@ const Home = () => {
                     onChange={(e) => onChangeHandler(e)}
                     className="select"
                   >
+                    <option>용인</option>
+                    <option>평택</option>
                     <option>강남</option>
-                    <option>강동</option>
-                    <option>경광주</option>
-                    <option>고덕</option>
-                    <option>과천</option>
-                    <option>남수원</option>
+                    <option>송파</option>
+                    <option>수원</option>
+                    <option>분당</option>
+                  </select>
+                </div>
+              </div>
+              <div class="level-item">
+                <p class="subtitle is-5">국사</p>
+              </div>
+              <div class="level-item">
+                <div className="select">
+                  <select className="select">
+                    <option>여주</option>
+                    <option>오산</option>
+                    <option>서초</option>
                     <option>남양</option>
-                    <option>동수원</option>
-                    <option>동탄</option>
-                    <option>모란</option>
+                    <option>화성</option>
+                    <option>조암</option>
+                    <option>안중</option>
+                    <option>강동</option>
+                    <option>평택</option>
+                    <option>서수원</option>
+                    <option>남수원</option>
                     <option>반포</option>
                     <option>북수원</option>
-                    <option>분당</option>
-                    <option>서수원</option>
-                    <option>서초</option>
-                    <option>성남</option>
-                    <option>송탄</option>
-                    <option>송파</option>
-                    <option>수내</option>
-                    <option>수서</option>
+                    <option>과천</option>
                     <option>수원</option>
-                    <option>수지</option>
-                    <option>신갈</option>
+                    <option>송탄</option>
                     <option>신사</option>
-                    <option>안성</option>
-                    <option>안중</option>
+                    <option>강남</option>
                     <option>양재</option>
-                    <option>여주</option>
+                    <option>동수원</option>
                     <option>영통</option>
-                    <option>오산</option>
+                    <option>수지</option>
+                    <option>분당</option>
+                    <option>동탄</option>
+                    <option>수서</option>
+                    <option>송파</option>
+                    <option>모란</option>
+                    <option>신갈</option>
+                    <option>가락</option>
+                    <option>안성</option>
+                    <option>고덕</option>
+                    <option>성남</option>
+                    <option>수내</option>
                     <option>용인</option>
+                    <option>경광주</option>
+                    <option>하남</option>
                     <option>이천</option>
                     <option>장호원</option>
-                    <option>조암</option>
-                    <option>평택</option>
-                    <option>하남</option>
-                    <option>화성</option>
                   </select>
                 </div>
               </div>

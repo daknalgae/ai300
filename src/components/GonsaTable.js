@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { usePagination, useTable } from "react-table";
+import { SAMPLE_GONGSA } from "./sampleGongsaData";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import MaUTable from "@material-ui/core/Table";
@@ -71,23 +72,26 @@ function Table({ columns, data }) {
 
   const rowClicked = (row) => {
     setIsModal(!isModal);
-    axios({
-      method: "GET",
-      url: "http://220.93.122.144:3000/ailine/detail?idx=" + row.idx,
-      header: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTP-8",
-      },
-      responseType: "type",
-    })
-      .then(function (response) {
-        //console.log(response.data);
-        setDetailData(response.data);
-        console.log(detailData);
-      })
-      .catch((Error) => {
-        console.log(Error);
-      });
+    // axios({
+    //   method: "GET",
+    //   url: "http://220.93.122.144:3000/ailine/detail?idx=" + row.idx,
+    //   header: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json;charset=UTP-8",
+    //   },
+    //   responseType: "type",
+    // })
+    //   .then(function (response) {
+    //     //console.log(response.data);
+    //     setDetailData(response.data);
+    //     console.log(detailData);
+    //   })
+    //   .catch((Error) => {
+    //     console.log(Error);
+    //   });
+
+    const arr2 = SAMPLE_GONGSA.filter((element) => element.idx === row.idx);
+    setDetailData(arr2);
 
     const { naver } = window;
     if (!mapElement.current || !naver) return;
@@ -293,22 +297,23 @@ const GongsaTable = ({ date, jisa }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios({
-      method: "GET",
-      url:
-        "http://220.93.122.144:3000/ailine/list?date=" + date + "&jisa=" + jisa,
-      header: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTP-8",
-      },
-      responseType: "type",
-    })
-      .then(function (response) {
-        setData(response.data);
-      })
-      .catch((Error) => {
-        console.log(Error);
-      });
+    // axios({
+    //   method: "GET",
+    //   url:
+    //     "http://220.93.122.144:3000/ailine/list?date=" + date + "&jisa=" + jisa,
+    //   header: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json;charset=UTP-8",
+    //   },
+    //   responseType: "type",
+    // })
+    //   .then(function (response) {
+    //     setData(response.data);
+    //   })
+    //   .catch((Error) => {
+    //     console.log(Error);
+    //   });
+    setData(SAMPLE_GONGSA);
   }, [date, jisa]);
 
   const columns = React.useMemo(

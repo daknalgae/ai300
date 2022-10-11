@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { SAMPLE_GONGSA } from "./sampleGongsaData";
 
 const GongsaMap = () => {
   const mapElement = useRef(null);
@@ -30,35 +31,41 @@ const GongsaMap = () => {
     if (!mapElement.current || !naver) return;
 
     // 지도에 표시할 위치의 위도와 경도 좌표를 파라미터로 넣어줍니다.
-    const location = new naver.maps.LatLng(37.5656, 126.9769);
+    const location = new naver.maps.LatLng(
+      37.38198723416358,
+      127.11889083734368
+    );
     const mapOptions = {
       center: location,
-      zoom: 17,
+      zoom: 12,
       zoomControl: true,
       zoomControlOptions: {
         position: naver.maps.Position.TOP_RIGHT,
       },
     };
     const map = new naver.maps.Map(mapElement.current, mapOptions);
-    new naver.maps.Marker({
-      position: location,
-      map,
-    });
+    // new naver.maps.Marker({
+    //   position: location,
+    //   map,
+    // });
 
     let markers = new Array();
     let infoWindows = new Array();
-    testMarkers.forEach((element) => {
+    let count = 0;
+    SAMPLE_GONGSA.forEach((element) => {
       const marker = new naver.maps.Marker({
         map,
-        title: element.latitude,
-        position: new naver.maps.LatLng(element.latitude, element.longitude),
+        title: element.gongsa,
+        position: new naver.maps.LatLng(element.longitude, element.latitude),
       });
 
       const infoWindow = new naver.maps.InfoWindow({
         content:
-          '<div style="width:200px; text-align:center;padding:10px;"><b>' +
-          element.title +
-          "</b><br> - 네이버 지도 -</div>",
+          '<div style="width:300px; text-align:center;padding:10px;"><b>' +
+          element.gongsa +
+          "</b><br> - 주소 : " +
+          element.site +
+          " </div>",
       });
 
       markers.push(marker);
