@@ -12,6 +12,8 @@ import cloud from "../images/cloud.png";
 import rainy from "../images/downpour.png";
 import snow from "../images/snowflake.png";
 import storm from "../images/dark-and-stormy.png";
+import JISA from "../data/jisa";
+import KUKSA from "../data/kuksa";
 
 const SDatePicker = styled(DatePicker)`
   magin-top: 1.5rem;
@@ -26,20 +28,37 @@ const SDatePicker = styled(DatePicker)`
 const Home = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [finalDate, setFinalDate] = useState("");
+  const [kuksa, setKuksa] = useState("");
+  const [finalKuksa, setFinalKuksa] = useState("");
   const [jisa, setJisa] = useState("");
-
-  useEffect(() => {
-    setFinalDate(getFormatDate(startDate));
-  }, [startDate]);
+  let tempJisa = "";
+  let tempKuksa = KUKSA["용인"];
+  // useEffect(() => {
+  //   setFinalDate(getFormatDate(startDate));
+  // }, [startDate]);
 
   const onChangeHandler = (e) => {
+    setKuksa(e.currentTarget.value);
+  };
+
+  const onChangeJisaHandler = (e) => {
     setJisa(e.currentTarget.value);
   };
 
+  useEffect(() => {
+    tempJisa = jisa;
+    tempKuksa = KUKSA[tempJisa];
+    console.log(tempKuksa);
+  }, [jisa]);
+  const handleClick = () => {
+    setFinalDate(getFormatDate(startDate));
+    setFinalKuksa(kuksa);
+  };
+
   return (
-    <div className="App">
-      <Nav />
-      <div className="container">
+    <div>
+      <div className="container is-mobile">
+        <Nav />
         <section class="section">
           <nav class="level">
             <div class="level-left">
@@ -49,16 +68,15 @@ const Home = () => {
               <div class="level-item">
                 <div className="select">
                   <select
-                    value={jisa}
-                    onChange={(e) => onChangeHandler(e)}
                     className="select"
+                    value={jisa}
+                    onChange={(e) => onChangeJisaHandler(e)}
                   >
-                    <option>용인</option>
-                    <option>평택</option>
-                    <option>강남</option>
-                    <option>송파</option>
-                    <option>수원</option>
-                    <option>분당</option>
+                    {JISA.map((item, index) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -67,45 +85,16 @@ const Home = () => {
               </div>
               <div class="level-item">
                 <div className="select">
-                  <select className="select">
-                    <option>여주</option>
-                    <option>오산</option>
-                    <option>서초</option>
-                    <option>남양</option>
-                    <option>화성</option>
-                    <option>조암</option>
-                    <option>안중</option>
-                    <option>강동</option>
-                    <option>평택</option>
-                    <option>서수원</option>
-                    <option>남수원</option>
-                    <option>반포</option>
-                    <option>북수원</option>
-                    <option>과천</option>
-                    <option>수원</option>
-                    <option>송탄</option>
-                    <option>신사</option>
-                    <option>강남</option>
-                    <option>양재</option>
-                    <option>동수원</option>
-                    <option>영통</option>
-                    <option>수지</option>
-                    <option>분당</option>
-                    <option>동탄</option>
-                    <option>수서</option>
-                    <option>송파</option>
-                    <option>모란</option>
-                    <option>신갈</option>
-                    <option>가락</option>
-                    <option>안성</option>
-                    <option>고덕</option>
-                    <option>성남</option>
-                    <option>수내</option>
-                    <option>용인</option>
-                    <option>경광주</option>
-                    <option>하남</option>
-                    <option>이천</option>
-                    <option>장호원</option>
+                  <select
+                    className="select"
+                    value={kuksa}
+                    onChange={(e) => onChangeHandler(e)}
+                  >
+                    {KUKSA[jisa].map((item, index) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -119,6 +108,11 @@ const Home = () => {
                   onChange={(date) => setStartDate(date)}
                 />
               </div>
+              <div class="level-item">
+                <button className="button is-primary" onClick={handleClick}>
+                  조회하기
+                </button>
+              </div>
             </div>
             <div class="level-right">
               <div class="level-item">
@@ -130,9 +124,8 @@ const Home = () => {
             </div>
           </nav>
         </section>
-
         <GongsaStatus />
-        <GongsaTable date={finalDate} jisa={jisa} />
+        <GongsaTable date={finalDate} jisa={finalKuksa} />
         <GongsaMap />
         <Footer />
       </div>

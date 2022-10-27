@@ -10,7 +10,7 @@ const GongsaStatus = () => {
       <div className="content">
         <h3>사외공사 진행현황</h3>
       </div>
-      <nav className="level">
+      <nav className="level is-mobile">
         <div className="level-left">
           <div
             className="level-item has-text-centered"

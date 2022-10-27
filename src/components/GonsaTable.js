@@ -11,9 +11,9 @@ import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
 
 const statusColorMap = {
-  0: "gray",
-  1: "red",
-  2: "green",
+  미진행: "gray",
+  진행중: "red",
+  공사완료: "green",
   // etc
 };
 const statusMap = {
@@ -72,32 +72,32 @@ function Table({ columns, data }) {
 
   const rowClicked = (row) => {
     setIsModal(!isModal);
-    // axios({
-    //   method: "GET",
-    //   url: "http://220.93.122.144:3000/ailine/detail?idx=" + row.idx,
-    //   header: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json;charset=UTP-8",
-    //   },
-    //   responseType: "type",
-    // })
-    //   .then(function (response) {
-    //     //console.log(response.data);
-    //     setDetailData(response.data);
-    //     console.log(detailData);
-    //   })
-    //   .catch((Error) => {
-    //     console.log(Error);
-    //   });
+    axios({
+      method: "GET",
+      url: "http://220.93.122.144:3000/ailine/detail?idx=" + row.idx,
+      header: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTP-8",
+      },
+      responseType: "type",
+    })
+      .then(function (response) {
+        //console.log(response.data);
+        setDetailData(response.data);
+        console.log(detailData);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
 
-    const arr2 = SAMPLE_GONGSA.filter((element) => element.idx === row.idx);
-    setDetailData(arr2);
+    // const arr2 = SAMPLE_GONGSA.filter((element) => element.idx === row.idx);
+    // setDetailData(arr2);
 
     const { naver } = window;
     if (!mapElement.current || !naver) return;
 
     // 지도에 표시할 위치의 위도와 경도 좌표를 파라미터로 넣어줍니다.
-    const location = new naver.maps.LatLng(37.5656, 126.9769);
+    const location = new naver.maps.LatLng(row.longitude, row.latitude);
     const mapOptions = {
       center: location,
       zoom: 17,
@@ -297,23 +297,26 @@ const GongsaTable = ({ date, jisa }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // axios({
-    //   method: "GET",
-    //   url:
-    //     "http://220.93.122.144:3000/ailine/list?date=" + date + "&jisa=" + jisa,
-    //   header: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json;charset=UTP-8",
-    //   },
-    //   responseType: "type",
-    // })
-    //   .then(function (response) {
-    //     setData(response.data);
-    //   })
-    //   .catch((Error) => {
-    //     console.log(Error);
-    //   });
-    setData(SAMPLE_GONGSA);
+    axios({
+      method: "GET",
+      url:
+        "http://220.93.122.144:3000/ailine/list?date=" +
+        date +
+        "&kuksa=" +
+        jisa,
+      header: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTP-8",
+      },
+      responseType: "type",
+    })
+      .then(function (response) {
+        setData(response.data);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+    //setData(SAMPLE_GONGSA);
   }, [date, jisa]);
 
   const columns = React.useMemo(
@@ -345,7 +348,7 @@ const GongsaTable = ({ date, jisa }) => {
       },
       {
         Header: "진행상태",
-        accessor: "degree",
+        accessor: "temper",
       },
       {
         Header: "진행상태",
@@ -360,9 +363,7 @@ const GongsaTable = ({ date, jisa }) => {
         accessor: "status",
         Cell: (props) => {
           return (
-            <p style={{ color: statusColorMap[props.value] }}>
-              {statusMap[props.value]}
-            </p>
+            <p style={{ color: statusColorMap[props.value] }}>{props.value}</p>
           );
         },
       },
@@ -376,7 +377,7 @@ const GongsaTable = ({ date, jisa }) => {
       },
       {
         Header: "진행상태",
-        accessor: "jisa",
+        accessor: "kuksa",
       },
       {
         Header: "진행상태",

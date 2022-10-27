@@ -3,29 +3,6 @@ import { SAMPLE_GONGSA } from "./sampleGongsaData";
 
 const GongsaMap = () => {
   const mapElement = useRef(null);
-
-  const testMarkers = [
-    {
-      title: "하수관 정비공사",
-      latitude: "37.490681",
-      longitude: "127.012871",
-    },
-    {
-      title: "도시관 배관공사",
-      latitude: "37.510563",
-      longitude: "127.097397",
-    },
-    {
-      title: "상수도 공사",
-      latitude: "37.496899",
-      longitude: "127.045631",
-    },
-    {
-      title: "지하철 굴착공사",
-      latitude: "37.505203",
-      longitude: "127.046959",
-    },
-  ];
   useEffect(() => {
     const { naver } = window;
     if (!mapElement.current || !naver) return;
