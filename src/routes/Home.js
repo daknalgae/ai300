@@ -30,9 +30,10 @@ const Home = () => {
   const [finalDate, setFinalDate] = useState("");
   const [kuksa, setKuksa] = useState("");
   const [finalKuksa, setFinalKuksa] = useState("");
-  const [jisa, setJisa] = useState("");
+  const [jisa, setJisa] = useState("용인");
   let tempJisa = "";
   let tempKuksa = KUKSA["용인"];
+
   // useEffect(() => {
   //   setFinalDate(getFormatDate(startDate));
   // }, [startDate]);
@@ -50,6 +51,7 @@ const Home = () => {
     tempKuksa = KUKSA[tempJisa];
     console.log(tempKuksa);
   }, [jisa]);
+
   const handleClick = () => {
     setFinalDate(getFormatDate(startDate));
     setFinalKuksa(kuksa);
