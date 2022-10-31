@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
+import SAMPLE_DATA from "../data/ai";
 
 const statusColorMap = {
   미진행: "gray",
@@ -93,24 +94,31 @@ function Table({ columns, data }) {
 
   const rowClicked = (row) => {
     setIsModal(!isModal);
-    axios({
-      method: "GET",
-      url: "http://220.93.122.144:3000/ailine/detail?idx=" + row.idx,
-      header: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTP-8",
-      },
-      responseType: "type",
-    })
-      .then(function (response) {
-        //console.log(response.data);
-        setDetailData(response.data);
-        console.log(detailData);
-      })
-      .catch((Error) => {
-        console.log(Error);
-      });
+    // axios({
+    //   method: "GET",
+    //   url: "http://220.93.122.144:3000/ailine/detail?idx=" + row.idx,
+    //   header: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json;charset=UTP-8",
+    //   },
+    //   responseType: "type",
+    // })
+    //   .then(function (response) {
+    //     //console.log(response.data);
+    //     setDetailData(response.data);
+    //     console.log(detailData);
+    //   })
+    //   .catch((Error) => {
+    //     console.log(Error);
+    //   });
 
+    console.log(SAMPLE_DATA[row.kuksa]);
+    const found = SAMPLE_DATA[row.kuksa].find((obj) => {
+      return obj.idx === row.idx;
+    });
+    console.log(found);
+    //console.log(SAMPLE_DATA[row.idx]);
+    setDetailData(found);
     // const arr2 = SAMPLE_GONGSA.filter((element) => element.idx === row.idx);
     // setDetailData(arr2);
 
@@ -254,44 +262,44 @@ function Table({ columns, data }) {
                   <>
                     <p>
                       <strong>공사개요&nbsp;&nbsp;&nbsp;</strong>
-                      {detailData[0].gongsa}
+                      {detailData.gongsa}
                     </p>
                     <p
                       style={{
-                        color: rankColorMap[detailData[0].rank],
+                        color: rankColorMap[detailData.rank],
                         fontWeight: "bold",
                       }}
                     >
                       <strong>중요순위&nbsp;&nbsp;&nbsp;</strong>
-                      {detailData[0].rank}
+                      {detailData.rank}
                     </p>
                     <p>
                       <strong>주소&nbsp;&nbsp;&nbsp;</strong>
-                      {detailData[0].site}
+                      {detailData.site}
                     </p>
-                    <p style={{ color: gradeColorMap[detailData[0].grade] }}>
+                    <p style={{ color: gradeColorMap[detailData.grade] }}>
                       <strong>공사 등급&nbsp;&nbsp;&nbsp;</strong>
-                      {detailData[0].grade}
+                      {detailData.grade}
                     </p>
                     <p>
                       <strong>국사&nbsp;&nbsp;&nbsp;</strong>
-                      {detailData[0].kuksa}
+                      {detailData.kuksa}
                     </p>
                     <p>
                       <strong>공사기간&nbsp;&nbsp;&nbsp;</strong>
-                      {detailData[0].startday}~{detailData[0].endday}
+                      {detailData.startday}~{detailData.endday}
                     </p>
                     <p>
                       <strong>공사장과의 거리&nbsp;&nbsp;&nbsp;</strong>
-                      {detailData[0].distance}m
+                      {detailData.distance}m
                     </p>
-                    <p style={{ color: statusColorMap[detailData[0].status] }}>
+                    <p style={{ color: statusColorMap[detailData.status] }}>
                       <strong>공사진행상태&nbsp;&nbsp;&nbsp;</strong>
-                      {detailData[0].status}
+                      {detailData.status}
                     </p>
                     <p>
                       <strong>위험도&nbsp;&nbsp;&nbsp;</strong>
-                      {detailData[0].dangerous}
+                      {detailData.dangerous}
                     </p>
                   </>
                 ) : (
@@ -323,27 +331,32 @@ const GongsaTable = ({ date, jisa }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios({
-      method: "GET",
-      url:
-        "http://220.93.122.144:3000/ailine/list?date=" +
-        date +
-        "&kuksa=" +
-        jisa,
-      header: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTP-8",
-      },
-      responseType: "type",
-    })
-      .then(function (response) {
-        setData(response.data);
-        console.log(response.data);
-      })
-      .catch((Error) => {
-        console.log(Error);
-      });
-    //setData(SAMPLE_GONGSA);
+    // axios({
+    //   method: "GET",
+    //   url:
+    //     "http://220.93.122.144:3000/ailine/list?date=" +
+    //     date +
+    //     "&kuksa=" +
+    //     jisa,
+    //   header: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json;charset=UTP-8",
+    //   },
+    //   responseType: "type",
+    // })
+    //   .then(function (response) {
+    //     setData(response.data);
+    //     console.log(response.data);
+    //   })
+    //   .catch((Error) => {
+    //     console.log(Error);
+    //   });
+    // setData(SAMPLE_GONGSA);
+    // console.log(jisa);
+    if (date !== "" && jisa !== "") {
+      console.log(SAMPLE_DATA[jisa]);
+      setData(SAMPLE_DATA[jisa]);
+    }
   }, [date, jisa]);
 
   const columns = React.useMemo(

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import SAMPLE_DATA from "../data/ai";
 import { SAMPLE_GONGSA } from "./sampleGongsaData";
 
 const GongsaMap = ({ date, jisa }) => {
@@ -7,26 +8,29 @@ const GongsaMap = ({ date, jisa }) => {
   const mapElement = useRef(null);
 
   useEffect(() => {
-    axios({
-      method: "GET",
-      url:
-        "http://220.93.122.144:3000/ailine/list?date=" +
-        date +
-        "&kuksa=" +
-        jisa,
-      header: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTP-8",
-      },
-      responseType: "type",
-    })
-      .then(function (response) {
-        setGongsa(response.data);
-      })
-      .catch((Error) => {
-        console.log(Error);
-      });
-    //setData(SAMPLE_GONGSA);
+    // axios({
+    //   method: "GET",
+    //   url:
+    //     "http://220.93.122.144:3000/ailine/list?date=" +
+    //     date +
+    //     "&kuksa=" +
+    //     jisa,
+    //   header: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json;charset=UTP-8",
+    //   },
+    //   responseType: "type",
+    // })
+    //   .then(function (response) {
+    //     setGongsa(response.data);
+    //   })
+    //   .catch((Error) => {
+    //     console.log(Error);
+    //   });
+    if (date !== "" && jisa !== "") {
+      setGongsa(SAMPLE_DATA[jisa]);
+    }
+    // setGongsa(SAMPLE_DATA[jisa]);
   }, [date, jisa]);
 
   useEffect(() => {
@@ -84,7 +88,7 @@ const GongsaMap = ({ date, jisa }) => {
         }
       );
     });
-    console.log(markers);
+
     const getClickHandler = (seq) => {
       return (e) => {
         console.log(seq);
