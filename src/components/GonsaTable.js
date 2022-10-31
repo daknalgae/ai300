@@ -12,10 +12,31 @@ import axios from "axios";
 
 const statusColorMap = {
   미진행: "gray",
-  진행중: "red",
+  진행중: "orange",
   공사완료: "green",
   // etc
 };
+const gradeColorMap = {
+  A: "red",
+  B: "orange",
+  C: "gray",
+  // etc
+};
+
+const rankColorMap = {
+  1: "red",
+  2: "red",
+  3: "red",
+  4: "orange",
+  5: "orange",
+  6: "orange",
+  7: "orange",
+  8: "gray",
+  9: "gray",
+  10: "gray",
+  // etc
+};
+
 const statusMap = {
   0: "미진행",
   1: "진행중",
@@ -74,7 +95,7 @@ function Table({ columns, data }) {
     setIsModal(!isModal);
     axios({
       method: "GET",
-      url: "http://220.93.122.144:3000/ailine/detail?idx=" + row.idx,
+      url: "http://220.93.122.144:80/ailine/detail?idx=" + row.idx,
       header: {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTP-8",
@@ -235,7 +256,12 @@ function Table({ columns, data }) {
                       <strong>공사개요&nbsp;&nbsp;&nbsp;</strong>
                       {detailData[0].gongsa}
                     </p>
-                    <p>
+                    <p
+                      style={{
+                        color: rankColorMap[detailData[0].rank],
+                        fontWeight: "bold",
+                      }}
+                    >
                       <strong>중요순위&nbsp;&nbsp;&nbsp;</strong>
                       {detailData[0].rank}
                     </p>
@@ -243,13 +269,13 @@ function Table({ columns, data }) {
                       <strong>주소&nbsp;&nbsp;&nbsp;</strong>
                       {detailData[0].site}
                     </p>
-                    <p>
+                    <p style={{ color: gradeColorMap[detailData[0].grade] }}>
                       <strong>공사 등급&nbsp;&nbsp;&nbsp;</strong>
                       {detailData[0].grade}
                     </p>
                     <p>
-                      <strong>지사&nbsp;&nbsp;&nbsp;</strong>
-                      {detailData[0].jisa}
+                      <strong>국사&nbsp;&nbsp;&nbsp;</strong>
+                      {detailData[0].kuksa}
                     </p>
                     <p>
                       <strong>공사기간&nbsp;&nbsp;&nbsp;</strong>
@@ -259,9 +285,9 @@ function Table({ columns, data }) {
                       <strong>공사장과의 거리&nbsp;&nbsp;&nbsp;</strong>
                       {detailData[0].distance}m
                     </p>
-                    <p>
-                      <strong>진행상태&nbsp;&nbsp;&nbsp;</strong>
-                      {statusMap[detailData[0].status]}
+                    <p style={{ color: statusColorMap[detailData[0].status] }}>
+                      <strong>공사진행상태&nbsp;&nbsp;&nbsp;</strong>
+                      {detailData[0].status}
                     </p>
                     <p>
                       <strong>위험도&nbsp;&nbsp;&nbsp;</strong>
@@ -300,10 +326,7 @@ const GongsaTable = ({ date, jisa }) => {
     axios({
       method: "GET",
       url:
-        "http://220.93.122.144:3000/ailine/list?date=" +
-        date +
-        "&kuksa=" +
-        jisa,
+        "http://220.93.122.144:80/ailine/list?date=" + date + "&kuksa=" + jisa,
       header: {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTP-8",
@@ -312,6 +335,7 @@ const GongsaTable = ({ date, jisa }) => {
     })
       .then(function (response) {
         setData(response.data);
+        console.log(response.data);
       })
       .catch((Error) => {
         console.log(Error);
@@ -337,23 +361,6 @@ const GongsaTable = ({ date, jisa }) => {
         Header: "시작일시",
         accessor: "startday",
       },
-
-      {
-        Header: "dd",
-        accessor: "damdang",
-      },
-      {
-        Header: "진행상태",
-        accessor: "dangerous",
-      },
-      {
-        Header: "진행상태",
-        accessor: "temper",
-      },
-      {
-        Header: "진행상태",
-        accessor: "distance",
-      },
       {
         Header: "종료일시",
         accessor: "endday",
@@ -366,30 +373,6 @@ const GongsaTable = ({ date, jisa }) => {
             <p style={{ color: statusColorMap[props.value] }}>{props.value}</p>
           );
         },
-      },
-      {
-        Header: "진행상태",
-        accessor: "grade",
-      },
-      {
-        Header: "진행상태",
-        accessor: "idx",
-      },
-      {
-        Header: "진행상태",
-        accessor: "kuksa",
-      },
-      {
-        Header: "진행상태",
-        accessor: "latitude",
-      },
-      {
-        Header: "진행상태",
-        accessor: "longitude",
-      },
-      {
-        Header: "진행상태",
-        accessor: "sky",
       },
     ],
     []

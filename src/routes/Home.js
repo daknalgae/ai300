@@ -128,7 +128,7 @@ const Home = () => {
         </section>
         <GongsaStatus />
         <GongsaTable date={finalDate} jisa={finalKuksa} />
-        <GongsaMap />
+        <GongsaMap date={finalDate} jisa={finalKuksa} />
         <Footer />
       </div>
     </div>
