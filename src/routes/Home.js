@@ -14,6 +14,7 @@ import snow from "../images/snowflake.png";
 import storm from "../images/dark-and-stormy.png";
 import JISA from "../data/jisa";
 import KUKSA from "../data/kuksa";
+import STATUS from "../data/status";
 
 const SDatePicker = styled(DatePicker)`
   magin-top: 1.5rem;
@@ -49,7 +50,7 @@ const Home = () => {
   useEffect(() => {
     tempJisa = jisa;
     tempKuksa = KUKSA[tempJisa];
-    console.log(tempKuksa);
+    console.log(STATUS);
   }, [jisa]);
 
   const handleClick = () => {
@@ -126,7 +127,7 @@ const Home = () => {
             </div>
           </nav>
         </section>
-        <GongsaStatus />
+        <GongsaStatus date={finalDate} jisa={jisa} kuksa={finalKuksa} />
         <GongsaTable date={finalDate} jisa={finalKuksa} />
         <GongsaMap date={finalDate} jisa={finalKuksa} />
         <Footer />
