@@ -95,7 +95,7 @@ function Table({ columns, data }) {
     setIsModal(!isModal);
     axios({
       method: "GET",
-      url: "http://220.93.122.144:80/ailine/detail?idx=" + row.idx,
+      url: "http://220.93.122.144:3000/ailine/detail?idx=" + row.idx,
       header: {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTP-8",
@@ -326,7 +326,10 @@ const GongsaTable = ({ date, jisa }) => {
     axios({
       method: "GET",
       url:
-        "http://220.93.122.144:80/ailine/list?date=" + date + "&kuksa=" + jisa,
+        "http://220.93.122.144:3000/ailine/list?date=" +
+        date +
+        "&kuksa=" +
+        jisa,
       header: {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTP-8",
